@@ -1,0 +1,25 @@
+[font.normal]
+family = "MesloLGS NF"
+
+[window]
+option_as_alt = 'OnlyLeft'
+
+# [[keyboard.bindings]]
+# key = "J"
+# mods = "Alt"
+# chars = "\\x1bj"
+#
+# [[keyboard.bindings]]
+# key = "K"
+# mods = "Alt"
+# chars = "\\x1bk"
+#
+# [[keyboard.bindings]]
+# key = "H"
+# mods = "Alt"
+# chars = "\\x1bh"
+#
+# [[keyboard.bindings]]
+# key = "L"
+# mods = "Alt"
+# chars = "\\x1bl"
