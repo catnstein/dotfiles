@@ -16,6 +16,10 @@ ln -s ~/.dotfiles/zshrc ~/.zshrc
 
 ### .config
 
+```bash
+mkdir ~/.config
+```
+
 - alacritty
 ```bash
 ln -s ~/.dotfiles/config/alacritty ~/.config
