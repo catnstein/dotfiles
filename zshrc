@@ -106,13 +106,17 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias dump_gis="docker exec -i dct-db /bin/bash -c "PGPASSWORD=docker pg_dump -Fc -h localhost -U docker gis" > out.sql"
+alias copy_current_branch="git branch --show-current | pbcopy"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+
+export PATH=$PATH:/Users/mirceabadragan/.dapr/bin
 
 # starship
 eval "$(starship init zsh)"
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+eval "$(zoxide init zsh)"
