@@ -235,14 +235,6 @@ vim.opt.rtp:prepend(lazypath)
 --    :Lazy update
 --
 
-local js_based_languages = {
-  'typescript',
-  'javascript',
-  'typescriptreact',
-  'javascriptreact',
-  'vue',
-}
-
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup {
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
