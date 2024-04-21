@@ -238,7 +238,6 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup {
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -252,29 +251,6 @@ require('lazy').setup {
   -- TODO: move each plugin to separate file
   -- TODO: document each plugin
   -- my custom plugins
-
-  {
-    'zbirenbaum/copilot.lua',
-    enabled = true,
-    event = { 'BufEnter' },
-    config = function()
-      require('copilot').setup {
-        suggestion = {
-          enabled = true,
-        },
-        panel = { enabled = false },
-      }
-    end,
-  },
-  {
-    'zbirenbaum/copilot-cmp',
-    enabled = true,
-    event = { 'BufEnter' },
-    dependencies = { 'zbirenbaum/copilot.lua' },
-    config = function()
-      require('copilot_cmp').setup()
-    end,
-  },
 
   {
     'gelguy/wilder.nvim',
