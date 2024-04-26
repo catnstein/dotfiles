@@ -1,9 +1,11 @@
-return { -- Autoformat
+-- Autoformat
+return {
   'stevearc/conform.nvim',
   opts = {
     notify_on_error = true,
+    async = true,
     format_on_save = {
-      timeout_ms = 500,
+      timeout_ms = 4500,
       lsp_fallback = true,
     },
     formatters_by_ft = {
@@ -19,5 +21,10 @@ return { -- Autoformat
       json = { { 'prettierd', 'prettier' } },
       css = { { 'prettierd', 'prettier' } },
     },
+    config = function(_, opts)
+      local conform = require 'conform'
+
+      conform.setup(opts)
+    end,
   },
 }
