@@ -107,6 +107,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias dump_gis="docker exec -i dct-db /bin/bash -c "PGPASSWORD=docker pg_dump -Fc -h localhost -U docker gis" > out.sql"
 alias copy_current_branch="git branch --show-current | pbcopy"
+# alias fix_ssh="eval "$(ssh-agent -s)""
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export VOLTA_HOME="$HOME/.volta"
