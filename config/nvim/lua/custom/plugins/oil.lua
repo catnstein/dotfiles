@@ -4,6 +4,10 @@ return {
     view_options = {
       show_hidden = true,
     },
+    lsp_file_methods = {
+      timeout_ms = 5000,
+      autosave_changes = false,
+    },
     keymaps = {
       ['<C-s>'] = false,
       ['<C-h>'] = false,
