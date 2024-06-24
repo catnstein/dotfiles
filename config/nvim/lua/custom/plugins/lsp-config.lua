@@ -144,22 +144,23 @@ return { -- LSP Configuration & Plugins
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
-      tsserver = {
-        settings = {
-          typescript = {
-            inlayHints = {
-              includeInlayParameterNameHints = 'all',
-              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-              includeInlayFunctionParameterTypeHints = true,
-              includeInlayVariableTypeHints = true,
-              includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-              includeInlayPropertyDeclarationTypeHints = true,
-              includeInlayFunctionLikeReturnTypeHints = true,
-              includeInlayEnumMemberValueHints = true,
-            },
-          },
-        }
-      },
+      -- INFO: momentarily using typescript-tools. Use below settings if typescript-tools proves underwhelming
+      -- tsserver = {
+        -- settings = {
+        --   typescript = {
+        --     inlayHints = {
+        --       includeInlayParameterNameHints = 'all',
+        --       includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        --       includeInlayFunctionParameterTypeHints = true,
+        --       includeInlayVariableTypeHints = true,
+        --       includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+        --       includeInlayPropertyDeclarationTypeHints = true,
+        --       includeInlayFunctionLikeReturnTypeHints = true,
+        --       includeInlayEnumMemberValueHints = true,
+        --     },
+        --   },
+        -- }
+      -- },
       angularls = {},
       html = {},
       pylsp = {},
