@@ -1,5 +1,8 @@
 return { -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
+  opts = {
+    inlay_hints = { enabled = true },
+  },
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for neovim
     'williamboman/mason.nvim',
@@ -141,7 +144,22 @@ return { -- LSP Configuration & Plugins
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
-      tsserver = {},
+      tsserver = {
+        settings = {
+          typescript = {
+            inlayHints = {
+              includeInlayParameterNameHints = 'all',
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
+        }
+      },
       angularls = {},
       html = {},
       pylsp = {},
@@ -152,6 +170,7 @@ return { -- LSP Configuration & Plugins
         -- capabilities = {},
         settings = {
           Lua = {
+            hint = { enable = true },
             runtime = { version = 'LuaJIT' },
             workspace = {
               checkThirdParty = false,

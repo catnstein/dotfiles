@@ -198,6 +198,12 @@ vim.keymap.set('n', '<leader>gsh', '<cmd>Gitsigns stage_hunk<cr>', { desc = '[S]
 vim.keymap.set('n', '<leader>gush', '<cmd>Gitsigns undo_stage_hunk<cr>', { desc = '[U]ndo [s]tage [h]unk' })
 -- Oil
 vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+-- Inlay Hints
+if vim.lsp.inlay_hint then
+  vim.keymap.set('n', '<leader>ih', function()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
+  end, { desc = 'Toggle [I]nlay [H]ints' })
+end
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
