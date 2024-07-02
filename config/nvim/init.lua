@@ -204,6 +204,11 @@ if vim.lsp.inlay_hint then
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
   end, { desc = 'Toggle [I]nlay [H]ints' })
 end
+-- Save files
+vim.keymap.set('n', '<C-s>', '<cmd>w<cr>', { desc = 'Save file' })
+vim.keymap.set('n', '<C-S>', '<cmd>wa<cr>', { desc = 'Save all files' })
+-- Todo Comments
+vim.keymap.set('n', '<leader>td', ':TodoTelescope keywords=TODO', { desc = 'Search [T]odo comments' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
