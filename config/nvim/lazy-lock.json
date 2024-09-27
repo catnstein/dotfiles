@@ -43,5 +43,6 @@
   "vim-tmux-navigator": { "branch": "master", "commit": "5b3c701686fb4e6629c100ed32e827edf8dad01e" },
   "vim-unimpaired": { "branch": "master", "commit": "6d44a6dc2ec34607c41ec78acf81657248580bf1" },
   "vscode-js-debug": { "branch": "main", "commit": "6e34748cc8987e36a5033899ef1c8225a4b4f99a" },
+  "which-key.nvim": { "branch": "main", "commit": "fb070344402cfc662299d9914f5546d840a22126" },
   "wilder.nvim": { "branch": "master", "commit": "679f348dc90d80ff9ba0e7c470c40a4d038dcecf" }
 }
