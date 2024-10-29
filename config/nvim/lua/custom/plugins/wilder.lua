@@ -1,6 +1,7 @@
 -- adds features like autocomplete to wildmenu
 return {
   'gelguy/wilder.nvim',
+  enabled = false,
   keys = {
     ':',
     '/',
