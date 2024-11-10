@@ -25,6 +25,17 @@ mkdir ~/.config
 ln -s ~/.dotfiles/config/alacritty ~/.config
 ```
 
+Running on GPU
+
+- edit Info.plist
+
+``` bash
+# Alacritty.app/Contents/Info.plist
+# change automatic graphic switch to false
+<key>NSSupportsAutomaticGraphicsSwitching</key>
+<false/>
+```
+
 - nvim
 ```bash
 ln -s ~/.dotfiles/config/nvim ~/.config
