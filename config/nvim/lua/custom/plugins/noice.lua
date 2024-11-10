@@ -3,6 +3,13 @@ return {
   event = 'VeryLazy',
   opts = {
     -- add any options here
+    -- fix for macro command not showing
+    routes = {
+      {
+        view = 'cmdline',
+        filter = { event = 'msg_showmode' },
+      },
+    },
   },
   dependencies = {
     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
