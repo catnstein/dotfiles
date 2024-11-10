@@ -4,6 +4,8 @@
     - (or HTML version): https://neovim.io/doc/user/lua-guide.html
 --]]
 
+vim.opt.termguicolors = true
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
