@@ -5,7 +5,7 @@ return {
       show_hidden = true,
     },
     lsp_file_methods = {
-      timeout_ms = 5000,
+      timeout_ms = 60000,
       autosave_changes = false,
     },
     keymaps = {

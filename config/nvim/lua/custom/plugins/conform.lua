@@ -21,6 +21,14 @@ return {
       html = { 'prettierd', 'prettier' },
       json = { 'prettierd', 'prettier' },
       css = { 'prettierd', 'prettier' },
+      go = { 'gofumpt' },
+      formatters = {
+        gofumpt = {
+          command = 'gofumpt',
+          args = { '$FILENAME' },
+          stdin = false,
+        },
+      },
     },
     config = function(_, opts)
       local conform = require 'conform'

@@ -131,3 +131,8 @@ else
     export VISUAL="nvim"
     export EDITOR="nvim"
 fi
+
+# go related
+export GOPATH=$HOME/go
+export GOROOT=/usr/local/go  # This path might be different depending on your OS and installation method
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
