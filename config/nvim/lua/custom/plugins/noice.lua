@@ -9,6 +9,14 @@ return {
         view = 'cmdline',
         filter = { event = 'msg_showmode' },
       },
+      {
+        filter = {
+          event = 'msg_show',
+          kind = '',
+          find = 'written',
+        },
+        opts = { skip = true },
+      },
     },
   },
   dependencies = {
