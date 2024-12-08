@@ -16,10 +16,10 @@ return {
       --
       -- You can use a sub-list to tell conform to run *until* a formatter
       -- is found.
-      javascript = { 'prettierd', 'prettier' },
+      javascript = { 'prettier' },
       typescript = { 'prettierd', 'prettier' },
-      html = { 'prettierd', 'prettier' },
-      json = { 'prettierd', 'prettier' },
+      html = { 'prettier' },
+      json = { 'prettier' },
       css = { 'prettierd', 'prettier' },
       go = { 'gofumpt' },
       formatters = {
