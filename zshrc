@@ -136,3 +136,7 @@ fi
 export GOPATH=$HOME/go
 export GOROOT=/usr/local/go  # This path might be different depending on your OS and installation method
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+# android
+export ANDROID_HOME=/Users/$USER/Library/Android/sdk
+export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
