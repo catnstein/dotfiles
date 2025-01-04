@@ -25,6 +25,10 @@ mkdir ~/.config
 ln -s ~/.dotfiles/config/alacritty ~/.config
 ```
 
+- tmux
+```bash
+ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
+
 Running on GPU
 
 - edit Info.plist
