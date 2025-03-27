@@ -117,12 +117,18 @@ export PATH=$PATH:/Users/mirceabadragan/.dapr/bin
 
 # starship
 eval "$(starship init zsh)"
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+
+# pyenv
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
+
+# zoxide
 eval "$(zoxide init zsh)"
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+
+# jenv
+# export PATH="$HOME/.jenv/bin:$PATH"
+# eval "$(jenv init -)"
 
 if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
     export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
@@ -140,3 +146,7 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # android
 export ANDROID_HOME=/Users/$USER/Library/Android/sdk
 export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+
+# zsh autosuggestions
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
