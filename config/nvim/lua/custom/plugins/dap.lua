@@ -6,6 +6,19 @@ local js_based_languages = {
   'vue',
 }
 
+--- Gets a path to a package in the Mason registry.
+--- Prefer this to `get_package`, since the package might not always be
+--- available yet and trigger errors.
+---@param pkg string
+---@param path? string
+local function get_pkg_path(pkg, path)
+  pcall(require, 'mason')
+  local root = vim.env.MASON or (vim.fn.stdpath 'data' .. '/mason')
+  path = path or ''
+  local ret = root .. '/packages/' .. pkg .. '/' .. path
+  return ret
+end
+
 return {
   {
     'mfussenegger/nvim-dap',
@@ -147,6 +160,21 @@ return {
 
     config = function()
       local dap = require 'dap'
+
+      -- fix for js debug adapter
+      -- TODO: figure out dynamic port?
+      dap.adapters['pwa-node'] = {
+        type = 'server',
+        host = 'localhost',
+        port = 9229,
+        executable = {
+          command = 'node',
+          args = {
+            get_pkg_path('js-debug-adapter', '/js-debug/src/dapDebugServer.js'),
+            9229,
+          },
+        },
+      }
 
       -- local Config = require 'lazyvim.config'
       vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
