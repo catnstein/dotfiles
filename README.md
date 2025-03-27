@@ -25,6 +25,11 @@ mkdir ~/.config
 ln -s ~/.dotfiles/config/alacritty ~/.config
 ```
 
+- aerospace
+```bash
+ln -s ~/.dotfiles/config/aerospace/ ~/.config
+```
+
 - tmux
 ```bash
 ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
