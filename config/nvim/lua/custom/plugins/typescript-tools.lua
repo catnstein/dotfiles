@@ -13,6 +13,10 @@ return {
         includeInlayFunctionLikeReturnTypeHints = true,
         includeInlayEnumMemberValueHints = true,
       },
+      jsx_close_tag = {
+        enable = false,
+        filetypes = { 'javascriptreact', 'typescriptreact' },
+      },
     },
   },
 }

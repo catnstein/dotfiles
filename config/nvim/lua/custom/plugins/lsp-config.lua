@@ -43,6 +43,7 @@ return { -- LSP Configuration & Plugins
     --    That is to say, every time a new file is opened that is associated with
     --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
     --    function will be executed to configure the current buffer
+    local nvim_lsp = require 'lspconfig'
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)
@@ -136,6 +137,15 @@ return { -- LSP Configuration & Plugins
     local servers = {
       -- clangd = {},
       gopls = {},
+      denols = {
+        -- on_attach = on_attach,
+        root_dir = nvim_lsp.util.root_pattern('deno.json', 'deno.jsonc'),
+      },
+      -- nvim_lsp.ts_ls.setup {
+      --   -- on_attach = on_attach,
+      --   root_dir = nvim_lsp.util.root_pattern 'package.json',
+      --   single_file_support = false,
+      -- },
       golangci_lint_ls = {},
       -- pyright = {},
       -- rust_analyzer = {},
@@ -214,6 +224,8 @@ return { -- LSP Configuration & Plugins
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
+      ensure_installed = {},
+      automatic_installation = {},
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}
@@ -221,6 +233,9 @@ return { -- LSP Configuration & Plugins
           -- by the server configuration above. Useful when disabling
           -- certain features of an LSP (for example, turning off formatting for tsserver)
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+
+          if server_name == 'denols' then
+          end
 
           -- fix for angularls in nx workspaces
           if server_name == 'angularls' then
