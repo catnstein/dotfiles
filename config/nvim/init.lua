@@ -5,6 +5,7 @@
 --]]
 -- INFO: rount hover borders after 0.11 upgrade
 vim.o.winborder = 'rounded'
+vim.diagnostic.config({ virtual_lines = true })
 
 vim.opt.termguicolors = true
 
