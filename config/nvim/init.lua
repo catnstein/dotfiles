@@ -3,6 +3,8 @@
     - :help lua-guide
     - (or HTML version): https://neovim.io/doc/user/lua-guide.html
 --]]
+-- INFO: rount hover borders after 0.11 upgrade
+vim.o.winborder = 'rounded'
 
 vim.opt.termguicolors = true
 
