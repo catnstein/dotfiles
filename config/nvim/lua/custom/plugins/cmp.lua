@@ -1,4 +1,6 @@
-return { -- Autocompletion
+-- Autocomplete
+
+return {
   'hrsh7th/nvim-cmp',
   event = 'InsertEnter',
   dependencies = {
@@ -103,10 +105,19 @@ return { -- Autocompletion
             luasnip.jump(-1)
           end
         end, { 'i', 's' }),
+
+        -- Copilot
+        ['<C-a>'] = cmp.mapping(function()
+          if require('copilot.suggestion').is_visible() then
+            require('copilot.suggestion').accept()
+          else
+            cmp.confirm { select = true }
+          end
+        end),
       },
       sources = {
         { name = 'nvim_lsp' },
-        { name = 'copilot' },
+        -- { name = 'copilot' },
         { name = 'luasnip' },
         { name = 'path' },
       },
