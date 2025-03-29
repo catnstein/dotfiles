@@ -1,8 +1,3 @@
---[[
-    - https://learnxinyminutes.com/docs/lua/
-    - :help lua-guide
-    - (or HTML version): https://neovim.io/doc/user/lua-guide.html
---]]
 -- INFO: rount hover borders after 0.11 upgrade
 vim.o.winborder = 'rounded'
 vim.diagnostic.config({ virtual_lines = true })
@@ -11,11 +6,6 @@ vim.opt.termguicolors = true
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
--- [[ Setting options ]]
--- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
 
 -- Make line numbers default
 vim.opt.number = true
@@ -69,7 +59,6 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 -- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
@@ -131,7 +120,6 @@ vim.keymap.set('n', '<C-S>', '<cmd>wa<cr>', { desc = 'Save all files' })
 vim.keymap.set('n', '<leader>td', ':TodoTelescope keywords=TODO', { desc = 'Search [T]odo comments' })
 
 -- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
