@@ -10,7 +10,9 @@ return {
       enable_cursor_planning_mode = true, -- enable cursor planning mode!
     },
     ollama = {
-      model = 'deepseek-r1',
+      -- INFO: reasoning model instead
+      -- model = 'deepseek-r1',
+      model = 'codellama',
     },
     -- TODO: not working yet
     rag_service = {
