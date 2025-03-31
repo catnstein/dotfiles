@@ -8,7 +8,7 @@ return {
         suggestion = {
           enabled = true,
           auto_trigger = true,
-          debounce = 75,
+          debounce = 250,
           keymap = {
             accept = '<C-a>', -- Your custom accept key
             next = '<M-]>',
