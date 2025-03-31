@@ -1,4 +1,4 @@
--- INFO: rount hover borders after 0.11 upgrade
+-- INFO: round hover borders after 0.11 upgrade
 vim.o.winborder = 'rounded'
 vim.diagnostic.config({ virtual_lines = true })
 
