@@ -14,7 +14,7 @@ return {
     },
     -- TODO: not working yet
     rag_service = {
-      enabled = true,
+      enabled = false,
       host_mount =  os.getenv('HOME') .. '/Work',-- Host mount path for the rag service
       provider = 'ollama', -- The provider to use for RAG service (e.g. openai or ollama)
       llm_model = 'deepseek-r1', -- The LLM model to use for RAG service
