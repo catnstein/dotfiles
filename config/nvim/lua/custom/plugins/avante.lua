@@ -4,7 +4,23 @@ return {
   lazy = true,
   version = false, -- set this if you want to always pull the latest change
   opts = {
-    -- add any opts here
+    provider = 'ollama',
+    cursor_applying_provider = 'claude',
+    behaviour = {
+      enable_cursor_planning_mode = true, -- enable cursor planning mode!
+    },
+    ollama = {
+      model = 'deepseek-r1',
+    },
+    -- TODO: not working yet
+    rag_service = {
+      enabled = true,
+      host_mount =  os.getenv('HOME') .. '/Work',-- Host mount path for the rag service
+      provider = 'ollama', -- The provider to use for RAG service (e.g. openai or ollama)
+      llm_model = 'deepseek-r1', -- The LLM model to use for RAG service
+      embed_model = 'nomic-embed-text', -- The embedding model to use for RAG service
+      endpoint = 'http://localhost:11434', -- The API endpoint for RAG service
+    },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = 'make',
@@ -30,7 +46,7 @@ return {
             insert_mode = true,
           },
           -- required for Windows users
-          use_absolute_path = true,
+          -- use_absolute_path = true,
         },
       },
     },

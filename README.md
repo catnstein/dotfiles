@@ -51,3 +51,15 @@ Running on GPU
 ln -s ~/.dotfiles/config/nvim ~/.config
 ```
 
+## Local LLM
+
+1. install ollama
+
+2. use model
+
+```bash
+ollama run deepseek-r1
+```
+
+3. TODO: use a rag service
+
