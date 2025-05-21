@@ -136,17 +136,17 @@ return { -- LSP Configuration & Plugins
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
       -- clangd = {},
+      -- golangci_lint_ls = {},
       gopls = {},
-      denols = {
-        -- on_attach = on_attach,
-        root_dir = nvim_lsp.util.root_pattern('deno.json', 'deno.jsonc'),
-      },
+      -- denols = {
+      --   -- on_attach = on_attach,
+      --   root_dir = nvim_lsp.util.root_pattern('deno.json', 'deno.jsonc'),
+      -- },
       -- nvim_lsp.ts_ls.setup {
       --   -- on_attach = on_attach,
       --   root_dir = nvim_lsp.util.root_pattern 'package.json',
       --   single_file_support = false,
       -- },
-      golangci_lint_ls = {},
       -- pyright = {},
       -- rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
