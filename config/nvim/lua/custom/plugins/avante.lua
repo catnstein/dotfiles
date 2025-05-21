@@ -3,23 +3,49 @@ return {
   event = 'VeryLazy',
   lazy = true,
   version = false, -- set this if you want to always pull the latest change
+  -- system_prompt as function ensures LLM always has latest MCP server state
+  -- This is evaluated for every message, even in existing chats
+  --
+
   opts = {
+    --MCP related
+    -- system_prompt = function()
+    --   local hub = require('mcphub').get_hub_instance()
+    --   return hub:get_active_servers_prompt()
+    -- end,
+    -- -- Using function prevents requiring mcphub before it's loaded
+    -- --
+    -- custom_tools = function()
+    --   return {
+    --     require('mcphub.extensions.avante').mcp_tool(),
+    --   }
+    -- end,
+    --MCP related
+
     provider = 'ollama',
-    cursor_applying_provider = 'claude',
+    -- provider = 'claude',
+    cursor_applying_provider = 'ollama',
     behaviour = {
       enable_cursor_planning_mode = true, -- enable cursor planning mode!
     },
     ollama = {
       -- INFO: reasoning model instead
       -- model = 'deepseek-r1',
-      model = 'codellama',
+      -- model = 'codellama',
+      -- model = 'qwen2.5-coder:32b',
+      model = 'qwen2.5-coder:7b',
+
+      -- for translations
+      -- model = 'aya:8b',
     },
     -- TODO: not working yet
     rag_service = {
       enabled = false,
-      host_mount =  os.getenv('HOME') .. '/Work',-- Host mount path for the rag service
+      runner = 'docker',
+      -- host_mount = os.getenv 'HOME' .. '/Work', -- Host mount path for the rag service
+      host_mount = '/Users/mirceabadragan/Work',
       provider = 'ollama', -- The provider to use for RAG service (e.g. openai or ollama)
-      llm_model = 'deepseek-r1', -- The LLM model to use for RAG service
+      llm_model = 'llama3', -- The LLM model to use for RAG service
       embed_model = 'nomic-embed-text', -- The embedding model to use for RAG service
       endpoint = 'http://localhost:11434', -- The API endpoint for RAG service
     },
@@ -60,5 +86,6 @@ return {
       },
       ft = { 'markdown', 'Avante' },
     },
+    'ravitemer/mcphub.nvim',
   },
 }

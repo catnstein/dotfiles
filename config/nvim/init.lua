@@ -1,6 +1,12 @@
 -- INFO: round hover borders after 0.11 upgrade
 vim.o.winborder = 'rounded'
-vim.diagnostic.config({ virtual_lines = true })
+vim.diagnostic.config {
+  virtual_text = true,
+  virtual_lines = {
+    current_line = true,
+  },
+  signs = true,
+}
 
 vim.opt.termguicolors = true
 
@@ -121,6 +127,12 @@ vim.keymap.set('n', '<C-s>', '<cmd>w<cr>', { desc = 'Save file' })
 vim.keymap.set('n', '<C-S>', '<cmd>wa<cr>', { desc = 'Save all files' })
 -- Todo Comments
 vim.keymap.set('n', '<leader>td', ':TodoTelescope keywords=TODO', { desc = 'Search [T]odo comments' })
+
+-- TsTools
+vim.keymap.set('n', '<leader>ci', '<cmd>TSToolsAddMissingImports<CR>')
+
+-- Disable Options
+vim.keymap.set('n', 's', '<Nop>', { noremap = true, silent = true })
 
 -- [[ Basic Autocommands ]]
 
