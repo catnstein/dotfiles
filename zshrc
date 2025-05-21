@@ -150,3 +150,4 @@ export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 # zsh autosuggestions
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
