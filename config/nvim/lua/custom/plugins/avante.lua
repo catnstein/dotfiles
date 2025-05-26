@@ -23,20 +23,13 @@ return {
     --MCP related
 
     provider = 'ollama',
-    -- provider = 'claude',
     cursor_applying_provider = 'ollama',
     behaviour = {
       enable_cursor_planning_mode = true, -- enable cursor planning mode!
     },
     ollama = {
-      -- INFO: reasoning model instead
-      -- model = 'deepseek-r1',
-      -- model = 'codellama',
-      -- model = 'qwen2.5-coder:32b',
       model = 'qwen2.5-coder:7b',
-
-      -- for translations
-      -- model = 'aya:8b',
+      max_tokens = 4096,
     },
     -- TODO: not working yet
     rag_service = {
