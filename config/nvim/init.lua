@@ -1,11 +1,23 @@
 -- INFO: round hover borders after 0.11 upgrade
 vim.o.winborder = 'rounded'
 vim.diagnostic.config {
-  virtual_text = true,
+  virtual_text = {
+    source = 'if_many',
+    spacing = 2,
+    prefix = '➞',
+  },
   virtual_lines = {
     current_line = true,
   },
   signs = true,
+  float = {
+    focusable = false,
+    style = 'minimal',
+    border = 'rounded',
+    source = 'if_many',
+    header = '',
+    prefix = '',
+  },
 }
 
 vim.opt.termguicolors = true
@@ -145,6 +157,28 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+-- Hide virtual text when cursor is on diagnostic line
+vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+  desc = 'Hide virtual text when cursor is on diagnostic line',
+  group = vim.api.nvim_create_augroup('diagnostic-cursor', { clear = true }),
+  callback = function()
+    local cursor_line = vim.fn.line '.' - 1
+    local diagnostics = vim.diagnostic.get(0, { lnum = cursor_line })
+
+    if #diagnostics > 0 then
+      vim.diagnostic.config { virtual_text = false }
+    else
+      vim.diagnostic.config {
+        virtual_text = {
+          source = 'if_many',
+          spacing = 4,
+          prefix = '➞',
+        },
+      }
+    end
   end,
 })
 
