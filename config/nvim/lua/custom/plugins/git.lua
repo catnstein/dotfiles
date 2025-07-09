@@ -28,6 +28,17 @@ return {
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
+      on_attach = function(bufnr)
+        local gs = require 'gitsigns'
+
+        -- Navigation
+        vim.keymap.set('n', ']h', gs.next_hunk, { buffer = bufnr, desc = 'Next git hunk' })
+        vim.keymap.set('n', '[h', gs.prev_hunk, { buffer = bufnr, desc = 'Previous git hunk' })
+        vim.keymap.set('n', 'ls', gs.stage_hunk, { buffer = bufnr, desc = 'Stage hunk' })
+        vim.keymap.set('n', 'lu', gs.undo_stage_hunk, { buffer = bufnr, desc = 'Undo stage hunk' })
+        vim.keymap.set('n', 'lb', gs.stage_buffer, { buffer = bufnr, desc = 'Stage buffer' })
+        vim.keymap.set('n', 'lp', gs.preview_hunk, { buffer = bufnr, desc = 'Stage buffer' })
+      end,
       signs = {
         add = { text = '┃' },
         change = { text = '┃' },
