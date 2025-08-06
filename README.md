@@ -9,6 +9,11 @@ git clone git@github.com:catnstein/dotfiles.git ~/.dotfiles
 
 ## Symlinks
 
+- tmuxinator
+```bash
+ln -sf /Users/mirceabadragan/.dotfiles/config/tmuxinator ~/.config/tmuxinator
+```
+
 - zsh
 ```bash
 ln -s ~/.dotfiles/zshrc ~/.zshrc
