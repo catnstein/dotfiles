@@ -6,7 +6,6 @@ end
 
 M.virtual_text_config = {
   source = true,
-  prefix = '➞',
   format = format_diagnostic,
 }
 
