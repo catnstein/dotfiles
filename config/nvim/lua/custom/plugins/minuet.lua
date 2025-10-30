@@ -10,12 +10,13 @@ return {
         context_window = 512, -- Optimized for local 7B model
         request_timeout = 5, -- Increased for local model response time
         throttle = 1000,
-        debounce = 400, -- Slightly increased to reduce request frequency
+        debounce = 750, -- Slightly increased to reduce request frequency
         notify = 'debug', -- Temporarily enabled for troubleshooting
 
         -- Virtual text configuration (ghost text like Copilot)
         virtualtext = {
           auto_trigger_ft = { '*' }, -- FIXED: '*' enables all filetypes, {} disables all
+          show_on_completion_menu = true,
           keymap = {
             accept = '<C-a>', -- Match your Copilot accept
             accept_line = '<C-l>', -- Accept single line
@@ -40,6 +41,11 @@ return {
           },
         },
       }
+
+      -- Enable virtualtext for the initial buffer
+      vim.schedule(function()
+        vim.b.minuet_virtual_text_auto_trigger = true
+      end)
     end,
   },
 }
