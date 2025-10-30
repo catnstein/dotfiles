@@ -142,6 +142,8 @@ fi
 export GOPATH=$HOME/go
 export GOROOT=/usr/local/go  # This path might be different depending on your OS and installation method
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+alias go='go1.25.1'
+export PATH="$PATH:$(go env GOPATH)/bin"
 
 # android
 export ANDROID_HOME=/Users/$USER/Library/Android/sdk
