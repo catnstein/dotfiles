@@ -174,6 +174,8 @@ return { -- LSP Configuration & Plugins
       angularls = {
         capabilities = {},
       },
+      protols = {},
+      buf = {},
     }
 
     -- Ensure the servers and tools above are installed
