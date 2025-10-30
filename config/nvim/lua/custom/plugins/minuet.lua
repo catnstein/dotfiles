@@ -1,5 +1,7 @@
 return {
   {
+    -- TODO: add proper configuratoin parameters
+    -- based on hardware etc.
     'milanglacier/minuet-ai.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
     event = { 'InsertEnter' },
@@ -10,7 +12,7 @@ return {
         context_window = 512, -- Optimized for local 7B model
         request_timeout = 5, -- Increased for local model response time
         throttle = 1000,
-        debounce = 750, -- Slightly increased to reduce request frequency
+        debounce = 1000, -- Slightly increased to reduce request frequency
         notify = 'debug', -- Temporarily enabled for troubleshooting
 
         -- Virtual text configuration (ghost text like Copilot)
