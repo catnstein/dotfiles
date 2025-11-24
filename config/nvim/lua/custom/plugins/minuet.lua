@@ -13,7 +13,7 @@ return {
         request_timeout = 5, -- Increased for local model response time
         throttle = 1000,
         debounce = 1000, -- Slightly increased to reduce request frequency
-        notify = 'debug', -- Temporarily enabled for troubleshooting
+        -- notify = 'debug', -- Temporarily enabled for troubleshooting
 
         -- Virtual text configuration (ghost text like Copilot)
         virtualtext = {
