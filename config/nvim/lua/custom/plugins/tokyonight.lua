@@ -8,8 +8,7 @@ return { -- You can easily change to a different colorscheme.
   priority = 1000, -- make sure to load this before all the other start plugins
   config = function()
     -- Load the colorscheme here
-    vim.cmd.colorscheme 'tokyonight-night'
-
+    vim.cmd.colorscheme 'catppuccin-mocha'
     -- You can configure highlights by doing something like
     vim.cmd.hi 'Comment gui=none'
   end,
