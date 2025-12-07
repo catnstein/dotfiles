@@ -72,7 +72,25 @@ return {
       -- fancy UI for the debugger
       {
         'rcarriga/nvim-dap-ui',
-        dependencies = { 'nvim-neotest/nvim-nio' },
+        dependencies = {
+          'nvim-neotest/nvim-nio',
+          {
+            'leoluz/nvim-dap-go',
+            config = true,
+            dependencies = {
+              'mfussenegger/nvim-dap',
+            },
+            keys = {
+              {
+                '<leader>dt',
+                function()
+                  require('dap-go').debug_test()
+                end,
+                desc = 'Debug test',
+              },
+            },
+          },
+        },
       -- stylua: ignore
       keys = {
         { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
@@ -277,7 +295,12 @@ return {
     opts = {
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
-      automatic_installation = true,
+      automatic_installation = {
+        -- These will be configured by separate plugins.
+        exclude = {
+          'delve',
+        },
+      },
 
       -- You can provide additional configuration to the handlers,
       -- see mason-nvim-dap README for more information
