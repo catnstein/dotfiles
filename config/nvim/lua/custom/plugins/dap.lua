@@ -33,6 +33,20 @@ return {
       {
         'mxsdev/nvim-dap-vscode-js',
         config = function()
+          local sign = vim.fn.sign_define
+
+          sign('DapBreakpoint', { text = '', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
+          sign('DapBreakpointCondition', { text = '', texthl = 'DapBreakpointCondition' })
+          sign('DapLogPoint', { text = '', texthl = 'DapLogPoint' })
+          sign('DapStopped', { text = '', texthl = 'DapStopped', linehl = 'DapStoppedLine' })
+          sign('DapBreakpointRejected', { text = '', texthl = 'DapBreakpointRejected' })
+
+          vim.api.nvim_set_hl(0, 'DapBreakpoint', { link = 'DiagnosticError' })
+          vim.api.nvim_set_hl(0, 'DapBreakpointCondition', { link = 'DiagnosticWarn' })
+          vim.api.nvim_set_hl(0, 'DapLogPoint', { link = 'DiagnosticInfo' })
+          vim.api.nvim_set_hl(0, 'DapStopped', { link = 'DiagnosticOk' })
+          vim.api.nvim_set_hl(0, 'DapBreakpointRejected', { link = 'DiagnosticHint' })
+
           ---@diagnostic disable-next-line: missing-fields
           require('dap-vscode-js').setup {
             -- Path of node executable. Defaults to $NODE_PATH, and then "node"
@@ -271,6 +285,7 @@ return {
       -- require("dap.ext.vscode").load_launchjs()
       local dap = require 'dap'
       local dapui = require 'dapui'
+
       dapui.setup(opts)
       dap.listeners.after.event_initialized['dapui_config'] = function()
         dapui.open {}
