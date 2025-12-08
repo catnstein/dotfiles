@@ -4,6 +4,7 @@ return {
   lazy = false,
   opts = {
     picker = { enabled = true },
+    explorer = { enabled = true },
   },
   keys = {
     {
@@ -12,6 +13,13 @@ return {
         Snacks.picker.smart()
       end,
       desc = 'Smart Find Files',
+    },
+    {
+      '<leader>e',
+      function()
+        Snacks.explorer()
+      end,
+      desc = 'File Explorer',
     },
   },
 }
