@@ -2,7 +2,7 @@
 vim.o.winborder = 'rounded'
 
 -- Setup diagnostic configuration
-require('custom.diagnostic')
+require 'custom.diagnostic'
 
 vim.opt.termguicolors = true
 
@@ -140,10 +140,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
-
 
 -- INFO: lazygit integration
 -- Set GIT_EDITOR to use nvr if Neovim and nvr are available
@@ -212,6 +211,3 @@ require('lazy').setup {
     { import = 'custom.plugins' },
   },
 }
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
