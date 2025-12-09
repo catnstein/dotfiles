@@ -5,8 +5,18 @@ return {
   opts = {
     picker = { enabled = true },
     explorer = { enabled = true },
+    lazygit = { enabled = true },
   },
   keys = {
+    -- Lazygit
+    {
+      '<leader>lg',
+      function()
+        Snacks.lazygit()
+      end,
+      desc = 'Lazygit',
+    },
+
     -- Search
     {
       '<leader>ff',
