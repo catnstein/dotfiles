@@ -122,8 +122,6 @@ end
 -- Save files
 vim.keymap.set('n', '<C-s>', '<cmd>w<cr>', { desc = 'Save file' })
 vim.keymap.set('n', '<C-S>', '<cmd>wa<cr>', { desc = 'Save all files' })
--- Todo Comments
-vim.keymap.set('n', '<leader>td', ':TodoTelescope keywords=TODO', { desc = 'Search [T]odo comments' })
 
 -- TsTools
 vim.keymap.set('n', '<leader>ci', '<cmd>TSToolsAddMissingImports<CR>')
