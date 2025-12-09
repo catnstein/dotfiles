@@ -107,8 +107,6 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- [[ My Keymaps ]]
 -- GIT
-vim.keymap.set('n', '<leader>gg', '<cmd>Neogit<cr>', { desc = 'Open Neo[g]it' })
-vim.keymap.set('n', '<leader>gd', '<cmd>Gitsigns diffthis<cr>', { desc = '[D]iffview this file' })
 vim.keymap.set('n', '<leader>gsh', '<cmd>Gitsigns stage_hunk<cr>', { desc = '[S]tage [h]unk' })
 vim.keymap.set('n', '<leader>gush', '<cmd>Gitsigns undo_stage_hunk<cr>', { desc = '[U]ndo [s]tage [h]unk' })
 -- Oil
@@ -142,11 +140,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- INFO: lazygit integration
--- Set GIT_EDITOR to use nvr if Neovim and nvr are available
-if vim.fn.has 'nvim' == 1 and vim.fn.executable 'nvr' == 1 then
-  vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-end
+-- -- INFO: lazygit integration
+-- -- Set GIT_EDITOR to use nvr if Neovim and nvr are available
+-- if vim.fn.has 'nvim' == 1 and vim.fn.executable 'nvr' == 1 then
+--   vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+-- end
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info

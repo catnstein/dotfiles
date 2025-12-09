@@ -8,7 +8,15 @@ return {
     lazygit = { enabled = true },
   },
   keys = {
-    -- Lazygit
+    -- Git
+    {
+      '<leader>gd',
+      function()
+        Snacks.picker.git_diff()
+      end,
+      desc = 'Git Diff (Hunks)',
+    },
+
     {
       '<leader>lg',
       function()
