@@ -1,3 +1,6 @@
+-- INFO: round hover borders after 0.11 upgrade
+vim.o.winborder = 'rounded'
+
 vim.opt.termguicolors = true
 
 vim.g.mapleader = ' '
