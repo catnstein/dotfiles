@@ -95,7 +95,6 @@ return {
       },
       sources = {
         { name = 'nvim_lsp' },
-        -- { name = 'minuet' },
         { name = 'luasnip' },
         { name = 'path' },
       },
