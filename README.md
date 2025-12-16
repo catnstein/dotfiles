@@ -37,7 +37,7 @@ ln -s ~/.dotfiles/config/aerospace/ ~/.config
 
 - tmux
 ```bash
-ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
+ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
 ```
 
 Running on GPU
