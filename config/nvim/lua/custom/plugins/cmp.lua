@@ -18,7 +18,7 @@ return {
     'hrsh7th/cmp-cmdline',
 
     -- TODO: check snippets
-    -- 'rafamadriz/friendly-snippets',
+    'rafamadriz/friendly-snippets',
   },
   config = function()
     local cmp = require 'cmp'
