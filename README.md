@@ -25,6 +25,11 @@ ln -s ~/.dotfiles/zshrc ~/.zshrc
 mkdir ~/.config
 ```
 
+- opencode
+```bash
+ln ~/.dotfiles/config/opencode/opencode.json ~/.config/opencode/opencode.json
+```
+
 - alacritty
 ```bash
 ln -s ~/.dotfiles/config/alacritty ~/.config
