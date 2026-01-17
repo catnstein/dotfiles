@@ -1,0 +1,8 @@
+{
+	"$schema": "https://opencode.ai/config.json",
+	"keybinds": {
+		"input_move_up": "ctrl+p",
+		"input_move_down": "ctrl+n",
+		"command_list": "ctrl+r"
+	}
+}
