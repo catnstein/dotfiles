@@ -112,7 +112,7 @@ alias copy_current_branch="git branch --show-current | pbcopy"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # API keys from macOS Keychain
-export GEMINI_API_KEY=$(security find-generic-password -a "$USER" -s "GEMINI_API_KEY" -w 2>/dev/null)
+# export GEMINI_API_KEY=$(security find-generic-password -a "$USER" -s "GEMINI_API_KEY" -w 2>/dev/null)
 export CONTEXT7_API_KEY=$(security find-generic-password -a "$USER" -s "CONTEXT7_API_KEY" -w 2>/dev/null)
 
 export VOLTA_HOME="$HOME/.volta"
