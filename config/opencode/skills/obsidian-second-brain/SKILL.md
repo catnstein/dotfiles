@@ -25,21 +25,7 @@ description: Navigate and build Obsidian second brain. Use for finding notes by 
 
 Location: `01 - Rough Notes/<title>.md`
 
-Format:
-```
-<YYYY-MM-DD> <HH:MM>
-
-Status: #new
-
-Tags: <user-specified>
-
-# <title>
-
-<content>
-
-# References:
-<[[links]] if any>
-```
+Template: `04 - Templates/Rough Note.md`
 
 ## Process Note
 1. Review rough note with user
