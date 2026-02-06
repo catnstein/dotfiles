@@ -66,6 +66,41 @@ vim.lsp.config('ts_ls', {
   },
 })
 
+-- Knip language server (global installation via Volta)
+local knip_server_path = vim.fn.expand '~/.volta/tools/image/packages/@knip/language-server/lib/node_modules/@knip/language-server/src/index.js'
+
+if vim.uv.fs_stat(knip_server_path) then
+  vim.lsp.config('knip', {
+    cmd = { 'node', knip_server_path, '--stdio' },
+    filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    root_markers = { 'knip.json', 'knip.jsonc', 'package.json' },
+    settings = {
+      knip = {
+        enabled = true,
+        editor = {
+          exports = {
+            codelens = { enabled = false },
+            hover = { enabled = true, maxSnippets = 3, timeout = 300 },
+            quickfix = { enabled = true },
+            highlight = { dimExports = false, dimTypes = false },
+          },
+        },
+      },
+    },
+    on_attach = function(client, bufnr)
+      -- Send knip.start request only once per client
+      if not client._knip_started then
+        client._knip_started = true
+        client:request('knip.start', nil, function(err, result)
+          if err then
+            vim.notify('Knip start error: ' .. vim.inspect(err), vim.log.levels.WARN)
+          end
+        end, bufnr)
+      end
+    end,
+  })
+  vim.lsp.enable 'knip'
+end
 vim.lsp.enable 'ts_ls'
 vim.lsp.enable 'html'
 vim.lsp.enable 'gopls'
