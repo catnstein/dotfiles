@@ -6,6 +6,20 @@ return {
     git_worktree.setup()
 
     git_worktree.on_tree_change(function(op, metadata)
+      -- Refresh Oil on switch
+      if op == git_worktree.Operations.Switch then
+        local oil_ok, oil = pcall(require, 'oil')
+        if oil_ok then
+          local bufname = vim.api.nvim_buf_get_name(0)
+          if bufname:match('^oil://') then
+            vim.schedule(function()
+              oil.open(vim.fn.getcwd())
+            end)
+          end
+        end
+        return
+      end
+
       if op ~= git_worktree.Operations.Create then
         return
       end
