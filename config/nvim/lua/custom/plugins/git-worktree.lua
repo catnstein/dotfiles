@@ -5,6 +5,73 @@ return {
     local git_worktree = require('git-worktree')
     git_worktree.setup()
 
+    git_worktree.on_tree_change(function(op, metadata)
+      if op ~= git_worktree.Operations.Create then
+        return
+      end
+
+      -- Get absolute path using git worktree list
+      local worktrees = vim.fn.systemlist('git worktree list --porcelain')
+      local new_path = nil
+      local parent = nil
+
+      for _, line in ipairs(worktrees) do
+        if line:match('^worktree ') then
+          local path = line:sub(10)
+          if path:match(metadata.path .. '$') then
+            new_path = path
+            parent = vim.fn.fnamemodify(path, ':h')
+            break
+          end
+        end
+      end
+
+      if not new_path then
+        vim.notify('Could not find worktree path', vim.log.levels.ERROR)
+        return
+      end
+
+      -- Copy .env from ../master or ../main
+      local env_source = nil
+      local master_env = parent .. '/master/.env'
+      local main_env = parent .. '/main/.env'
+
+      if vim.fn.filereadable(master_env) == 1 then
+        env_source = master_env
+      elseif vim.fn.filereadable(main_env) == 1 then
+        env_source = main_env
+      end
+
+      if env_source then
+        vim.fn.system({ 'cp', env_source, new_path .. '/.env' })
+        local source_name = vim.fn.fnamemodify(env_source, ':h:t')
+        vim.notify('.env copied from ' .. source_name, vim.log.levels.INFO)
+      else
+        vim.notify('.env not found in ../master or ../main', vim.log.levels.WARN)
+      end
+
+      -- Run npm ci async
+      vim.notify('Running npm ci in: ' .. new_path, vim.log.levels.INFO)
+
+      if vim.fn.isdirectory(new_path) ~= 1 then
+        vim.notify('Directory does not exist: ' .. new_path, vim.log.levels.ERROR)
+        return
+      end
+
+      vim.fn.jobstart({ 'npm', 'ci' }, {
+        cwd = new_path,
+        on_exit = function(_, code)
+          vim.schedule(function()
+            if code == 0 then
+              vim.notify('npm ci completed', vim.log.levels.INFO)
+            else
+              vim.notify('npm ci failed (exit ' .. code .. ')', vim.log.levels.ERROR)
+            end
+          end)
+        end,
+      })
+    end)
+
     local function get_worktrees()
       local output = vim.fn.systemlist('git worktree list --porcelain')
       local worktrees = {}
