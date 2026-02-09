@@ -97,6 +97,35 @@ if vim.uv.fs_stat(knip_server_path) then
           end
         end, bufnr)
       end
+
+      local knip_ns = vim.lsp.diagnostic.get_namespace(client.id)
+      local knip_augroup = vim.api.nvim_create_augroup('KnipDiagnostics_' .. bufnr, { clear = true })
+
+      -- Hide Knip diagnostics in insert mode
+      vim.api.nvim_create_autocmd('InsertEnter', {
+        group = knip_augroup,
+        buffer = bufnr,
+        callback = function()
+          vim.diagnostic.hide(knip_ns, bufnr)
+        end,
+      })
+
+      vim.api.nvim_create_autocmd('InsertLeave', {
+        group = knip_augroup,
+        buffer = bufnr,
+        callback = function()
+          vim.diagnostic.show(knip_ns, bufnr)
+        end,
+      })
+
+      -- Refresh diagnostics after saving to clear fixed issues
+      vim.api.nvim_create_autocmd('BufWritePost', {
+        group = knip_augroup,
+        buffer = bufnr,
+        callback = function()
+          client:request('knip.restart', nil, function() end, bufnr)
+        end,
+      })
     end,
   })
   vim.lsp.enable 'knip'
