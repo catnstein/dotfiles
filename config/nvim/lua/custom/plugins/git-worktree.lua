@@ -32,7 +32,8 @@ return {
       for _, line in ipairs(worktrees) do
         if line:match('^worktree ') then
           local path = line:sub(10)
-          if path:match(metadata.path .. '$') then
+          -- Use plain string comparison (metadata.path may contain pattern special chars like -)
+          if #path >= #metadata.path and path:sub(-#metadata.path) == metadata.path then
             new_path = path
             parent = vim.fn.fnamemodify(path, ':h')
             break
