@@ -4,12 +4,9 @@ M.defaults = {
   filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
   root_markers = { 'knip.json', 'knip.jsonc', 'package.json' },
   auto_start = true,
-  diagnostics = {
-    hide_on_insert = true,
-  },
+
   restart = {
     on_save = true,
-    on_insert_leave = true,
   },
   settings = {
     knip = {

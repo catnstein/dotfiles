@@ -23,33 +23,44 @@ local function build_on_attach(opts)
 
     local knip_ns = vim.lsp.diagnostic.get_namespace(client.id)
     local knip_augroup = vim.api.nvim_create_augroup('KnipDiagnostics_' .. bufnr, { clear = true })
+    local diag_filter = { ns_id = knip_ns, bufnr = bufnr }
 
-    if opts.diagnostics.hide_on_insert then
-      vim.api.nvim_create_autocmd('InsertEnter', {
-        group = knip_augroup,
-        buffer = bufnr,
-        callback = function()
-          vim.diagnostic.hide(knip_ns, bufnr)
-        end,
-      })
-
-      vim.api.nvim_create_autocmd('InsertLeave', {
-        group = knip_augroup,
-        buffer = bufnr,
-        callback = function()
-          if opts.restart.on_insert_leave then
-            client:request('knip.restart', nil, function() end, bufnr)
-          end
-          vim.diagnostic.show(knip_ns, bufnr)
-        end,
-      })
+    local function suppress_diagnostics()
+      vim.diagnostic.enable(false, diag_filter)
     end
+
+    local function restore_diagnostics()
+      vim.diagnostic.enable(true, diag_filter)
+    end
+
+    vim.api.nvim_create_autocmd('InsertEnter', {
+      group = knip_augroup,
+      buffer = bufnr,
+      callback = suppress_diagnostics,
+    })
+
+    vim.api.nvim_create_autocmd('InsertLeave', {
+      group = knip_augroup,
+      buffer = bufnr,
+      callback = function()
+        if not vim.bo[bufnr].modified then
+          restore_diagnostics()
+        end
+      end,
+    })
+
+    vim.api.nvim_create_autocmd('TextChanged', {
+      group = knip_augroup,
+      buffer = bufnr,
+      callback = suppress_diagnostics,
+    })
 
     if opts.restart.on_save then
       vim.api.nvim_create_autocmd('BufWritePost', {
         group = knip_augroup,
         buffer = bufnr,
         callback = function()
+          restore_diagnostics()
           client:request('knip.restart', nil, function() end, bufnr)
         end,
       })

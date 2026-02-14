@@ -71,15 +71,9 @@ Call `setup()` with an optional table to override defaults:    *knip.setup()*
     -- Automatically call vim.lsp.enable('knip')
     auto_start = true,
 
-    -- Diagnostic display options
-    diagnostics = {
-      hide_on_insert = true,  -- Hide knip diagnostics in insert mode
-    },
-
     -- Restart knip analysis triggers
     restart = {
       on_save = true,           -- Re-analyze after saving
-      on_insert_leave = true,   -- Re-analyze when leaving insert mode
     },
 
     -- Knip language server settings

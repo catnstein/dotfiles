@@ -44,12 +44,8 @@ require('knip').setup({
   filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
   root_markers = { 'knip.json', 'knip.jsonc', 'package.json' },
   auto_start = true,            -- auto vim.lsp.enable('knip')
-  diagnostics = {
-    hide_on_insert = true,      -- hide diagnostics while typing
-  },
   restart = {
     on_save = true,             -- re-analyze after :w
-    on_insert_leave = true,     -- re-analyze when leaving insert mode
   },
   settings = { ... },           -- knip LSP settings (see doc/knip.txt)
   on_attach = nil,              -- extra callback after built-in on_attach
