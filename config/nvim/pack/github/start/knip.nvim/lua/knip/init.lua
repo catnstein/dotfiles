@@ -1,0 +1,104 @@
+local config = require 'knip.config'
+local server = require 'knip.server'
+
+local M = {}
+
+--- @type table|nil
+M._resolved_config = nil
+--- @type string[]|nil
+M._resolved_cmd = nil
+--- @type string|nil
+M._cmd_source = nil
+
+local function build_on_attach(opts)
+  return function(client, bufnr)
+    if not client._knip_started then
+      client._knip_started = true
+      client:request('knip.start', nil, function(err)
+        if err then
+          vim.notify('knip.nvim: start error: ' .. vim.inspect(err), vim.log.levels.WARN)
+        end
+      end, bufnr)
+    end
+
+    local knip_ns = vim.lsp.diagnostic.get_namespace(client.id)
+    local knip_augroup = vim.api.nvim_create_augroup('KnipDiagnostics_' .. bufnr, { clear = true })
+
+    if opts.diagnostics.hide_on_insert then
+      vim.api.nvim_create_autocmd('InsertEnter', {
+        group = knip_augroup,
+        buffer = bufnr,
+        callback = function()
+          vim.diagnostic.hide(knip_ns, bufnr)
+        end,
+      })
+
+      vim.api.nvim_create_autocmd('InsertLeave', {
+        group = knip_augroup,
+        buffer = bufnr,
+        callback = function()
+          vim.diagnostic.show(knip_ns, bufnr)
+        end,
+      })
+    end
+
+    if opts.restart_on_save then
+      vim.api.nvim_create_autocmd('BufWritePost', {
+        group = knip_augroup,
+        buffer = bufnr,
+        callback = function()
+          client:request('knip.restart', nil, function() end, bufnr)
+        end,
+      })
+    end
+
+    if opts.on_attach then
+      opts.on_attach(client, bufnr)
+    end
+  end
+end
+
+--- Build the vim.lsp.config spec table from resolved options.
+--- @return table|nil lsp_config, string|nil error_msg
+function M.get_lsp_config()
+  local opts = M._resolved_config or config.resolve()
+  local cmd = M._resolved_cmd
+  if not cmd then
+    cmd, M._cmd_source = server.resolve(opts.cmd)
+  end
+  if not cmd then
+    return nil, 'knip.nvim: language server not found (tried volta, mason, npx)'
+  end
+
+  return {
+    cmd = cmd,
+    filetypes = opts.filetypes,
+    root_markers = opts.root_markers,
+    settings = opts.settings,
+    on_attach = build_on_attach(opts),
+  }
+end
+
+--- @param opts table|nil
+function M.setup(opts)
+  M._resolved_config = config.resolve(opts)
+  M._resolved_cmd, M._cmd_source = server.resolve(M._resolved_config.cmd)
+
+  if not M._resolved_cmd then
+    vim.notify('knip.nvim: language server not found (tried volta, mason, npx). Run :checkhealth knip for details.', vim.log.levels.WARN)
+    return
+  end
+
+  local lsp_config = M.get_lsp_config()
+  if not lsp_config then
+    return
+  end
+
+  vim.lsp.config('knip', lsp_config)
+
+  if M._resolved_config.auto_start then
+    vim.lsp.enable 'knip'
+  end
+end
+
+return M

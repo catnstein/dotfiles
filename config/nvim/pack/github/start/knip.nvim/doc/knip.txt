@@ -1,0 +1,130 @@
+*knip.txt*    Neovim integration for the Knip language server
+
+==============================================================================
+CONTENTS                                                        *knip-contents*
+
+  1. Introduction .............. |knip-introduction|
+  2. Requirements .............. |knip-requirements|
+  3. Installation .............. |knip-installation|
+  4. Configuration ............. |knip-configuration|
+  5. Auto-discovery ............ |knip-auto-discovery|
+  6. Health check .............. |knip-health|
+
+==============================================================================
+1. INTRODUCTION                                             *knip-introduction*
+
+knip.nvim integrates the Knip language server with Neovim's built-in LSP
+client. Knip detects unused files, dependencies, and exports in JavaScript
+and TypeScript projects.
+
+The plugin automatically resolves the language server binary from multiple
+sources (Volta, Mason, npx) and configures the LSP client with sensible
+defaults.
+
+==============================================================================
+2. REQUIREMENTS                                             *knip-requirements*
+
+- Neovim >= 0.11
+- Node.js
+- @knip/language-server (installed via Volta, Mason, npm, or available via npx)
+
+==============================================================================
+3. INSTALLATION                                             *knip-installation*
+
+With lazy.nvim: >lua
+  {
+    'your-username/knip.nvim',
+    ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    opts = {},
+  }
+<
+
+With Neovim's native packages: >bash
+  git clone https://github.com/your-username/knip.nvim \
+    ~/.local/share/nvim/site/pack/plugins/start/knip.nvim
+<
+Then in your config: >lua
+  require('knip').setup()
+<
+
+==============================================================================
+4. CONFIGURATION                                           *knip-configuration*
+
+Call `setup()` with an optional table to override defaults:    *knip.setup()*
+>lua
+  require('knip').setup({
+    -- Override server command (string or table)
+    cmd = nil,
+
+    -- Filetypes to attach to
+    filetypes = {
+      'javascript', 'javascriptreact',
+      'typescript', 'typescriptreact',
+    },
+
+    -- Root directory markers
+    root_markers = { 'knip.json', 'knip.jsonc', 'package.json' },
+
+    -- Automatically call vim.lsp.enable('knip')
+    auto_start = true,
+
+    -- Diagnostic display options
+    diagnostics = {
+      hide_on_insert = true,  -- Hide knip diagnostics in insert mode
+    },
+
+    -- Restart knip analysis after saving
+    restart_on_save = true,
+
+    -- Knip language server settings
+    settings = {
+      knip = {
+        enabled = true,
+        editor = {
+          exports = {
+            codelens = { enabled = false },
+            hover = { enabled = true, maxSnippets = 3, timeout = 300 },
+            quickfix = { enabled = true },
+            highlight = { dimExports = false, dimTypes = false },
+          },
+        },
+      },
+    },
+
+    -- Additional on_attach callback (called after built-in logic)
+    on_attach = nil,
+  })
+<
+
+Server resolution order:                                  *knip-server-resolve*
+
+  1. User-provided `cmd` option
+  2. Volta global install (~/.volta/tools/image/packages/...)
+  3. Mason install (~/.local/share/nvim/mason/packages/...)
+  4. npx fallback (npx @knip/language-server --stdio)
+
+==============================================================================
+5. AUTO-DISCOVERY                                        *knip-auto-discovery*
+
+On Neovim >= 0.11, the plugin ships an `lsp/knip.lua` file that is
+automatically discovered by Neovim. This allows zero-config usage:
+>lua
+  -- No setup() call needed if you accept all defaults.
+  -- Just ensure the plugin is in your runtimepath and call:
+  vim.lsp.enable('knip')
+<
+
+If you call `setup()`, it takes precedence and registers the config itself.
+
+==============================================================================
+6. HEALTH CHECK                                                  *knip-health*
+
+Run `:checkhealth knip` to verify:
+
+- Neovim version
+- Node.js availability
+- Language server binary resolution
+- Active knip LSP clients
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
