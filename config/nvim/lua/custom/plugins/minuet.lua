@@ -8,16 +8,16 @@ local providers = {
       model = 'qwen2.5-coder:7b',
       stream = true,
       optional = {
-        max_tokens = 256,
+        max_tokens = 56,
         top_p = 0.9,
       },
     },
     settings = {
-      context_window = 2000,
+      context_window = 512,
       request_timeout = 4,
       throttle = 400,
-      debounce = 100,
-      n_completions = 2,
+      debounce = 250,
+      n_completions = 1,
     },
   },
   gemini = {
@@ -71,8 +71,8 @@ return {
         },
 
         provider_options = {
-          gemini = providers.gemini.config,
           openai_fim_compatible = providers.ollama.config,
+          gemini = providers.gemini.config,
         },
 
         presets = {
