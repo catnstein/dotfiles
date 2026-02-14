@@ -17,16 +17,14 @@ knip.nvim integrates the Knip language server with Neovim's built-in LSP
 client. Knip detects unused files, dependencies, and exports in JavaScript
 and TypeScript projects.
 
-The plugin automatically resolves the language server binary from multiple
-sources (Volta, Mason, npx) and configures the LSP client with sensible
-defaults.
+The language server is run via `npx @knip/language-server` — no global
+install is needed.
 
 ==============================================================================
 2. REQUIREMENTS                                             *knip-requirements*
 
 - Neovim >= 0.11
-- Node.js
-- @knip/language-server (installed via Volta, Mason, npm, or available via npx)
+- Node.js + npx
 
 ==============================================================================
 3. INSTALLATION                                             *knip-installation*
@@ -53,9 +51,6 @@ Then in your config: >lua
 Call `setup()` with an optional table to override defaults:    *knip.setup()*
 >lua
   require('knip').setup({
-    -- Override server command (string or table)
-    cmd = nil,
-
     -- Filetypes to attach to
     filetypes = {
       'javascript', 'javascriptreact',
@@ -96,12 +91,9 @@ Call `setup()` with an optional table to override defaults:    *knip.setup()*
   })
 <
 
-Server resolution order:                                  *knip-server-resolve*
-
-  1. User-provided `cmd` option
-  2. Volta global install (~/.volta/tools/image/packages/...)
-  3. Mason install (~/.local/share/nvim/mason/packages/...)
-  4. npx fallback (npx @knip/language-server --stdio)
+The server is always started via: >
+  npx @knip/language-server --stdio
+<
 
 ==============================================================================
 5. AUTO-DISCOVERY                                        *knip-auto-discovery*
@@ -122,8 +114,8 @@ If you call `setup()`, it takes precedence and registers the config itself.
 Run `:checkhealth knip` to verify:
 
 - Neovim version
+- npx availability
 - Node.js availability
-- Language server binary resolution
 - Active knip LSP clients
 
 ==============================================================================

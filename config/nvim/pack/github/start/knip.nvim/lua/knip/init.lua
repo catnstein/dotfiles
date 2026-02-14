@@ -1,14 +1,11 @@
 local config = require 'knip.config'
-local server = require 'knip.server'
 
 local M = {}
 
+local DEFAULT_CMD = { 'npx', '@knip/language-server', '--stdio' }
+
 --- @type table|nil
 M._resolved_config = nil
---- @type string[]|nil
-M._resolved_cmd = nil
---- @type string|nil
-M._cmd_source = nil
 
 local function build_on_attach(opts)
   return function(client, bufnr)
@@ -59,19 +56,11 @@ local function build_on_attach(opts)
 end
 
 --- Build the vim.lsp.config spec table from resolved options.
---- @return table|nil lsp_config, string|nil error_msg
+--- @return table
 function M.get_lsp_config()
   local opts = M._resolved_config or config.resolve()
-  local cmd = M._resolved_cmd
-  if not cmd then
-    cmd, M._cmd_source = server.resolve(opts.cmd)
-  end
-  if not cmd then
-    return nil, 'knip.nvim: language server not found (tried volta, mason, npx)'
-  end
-
   return {
-    cmd = cmd,
+    cmd = DEFAULT_CMD,
     filetypes = opts.filetypes,
     root_markers = opts.root_markers,
     settings = opts.settings,
@@ -82,19 +71,13 @@ end
 --- @param opts table|nil
 function M.setup(opts)
   M._resolved_config = config.resolve(opts)
-  M._resolved_cmd, M._cmd_source = server.resolve(M._resolved_config.cmd)
 
-  if not M._resolved_cmd then
-    vim.notify('knip.nvim: language server not found (tried volta, mason, npx). Run :checkhealth knip for details.', vim.log.levels.WARN)
+  if vim.fn.executable 'npx' ~= 1 then
+    vim.notify('knip.nvim: npx not found in PATH. Run :checkhealth knip for details.', vim.log.levels.WARN)
     return
   end
 
-  local lsp_config = M.get_lsp_config()
-  if not lsp_config then
-    return
-  end
-
-  vim.lsp.config('knip', lsp_config)
+  vim.lsp.config('knip', M.get_lsp_config())
 
   if M._resolved_config.auto_start then
     vim.lsp.enable 'knip'

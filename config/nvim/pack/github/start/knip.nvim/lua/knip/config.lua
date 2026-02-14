@@ -1,7 +1,6 @@
 local M = {}
 
 M.defaults = {
-  cmd = nil,
   filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
   root_markers = { 'knip.json', 'knip.jsonc', 'package.json' },
   auto_start = true,
