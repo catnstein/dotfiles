@@ -73,6 +73,12 @@ vim.lsp.enable('knip')
 :checkhealth knip
 ```
 
+## TODO
+
+- [ ] Fix diagnostic flicker on save — when a previously flagged line is fixed, the stale diagnostic briefly appears before the server pushes the updated result. It should never show if the issue is resolved.
+- [ ] Proper server resolution — volta should not be required. Support finding the binary from project-local `node_modules`, global npm/pnpm installs, and Mason without hardcoded paths.
+- [ ] Lua API to start/stop the knip LSP — expose `require('knip').start()` and `require('knip').stop()` for manual control.
+
 ## License
 
 MIT
