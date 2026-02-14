@@ -5,9 +5,12 @@ Neovim integration for the [Knip](https://knip.dev) language server. Detects unu
 ## Requirements
 
 - Neovim >= 0.11
-- Node.js + npx
+- Node.js
+- `@knip/language-server` installed via [Volta](https://volta.sh) or [Mason](https://github.com/williamboman/mason.nvim)
 
-The language server (`@knip/language-server`) is run via `npx` automatically — no global install needed.
+```bash
+volta install @knip/language-server
+```
 
 ## Installation
 
@@ -44,11 +47,21 @@ require('knip').setup({
   diagnostics = {
     hide_on_insert = true,      -- hide diagnostics while typing
   },
-  restart_on_save = true,       -- re-analyze after :w
+  restart = {
+    on_save = true,             -- re-analyze after :w
+    on_insert_leave = true,     -- re-analyze when leaving insert mode
+  },
   settings = { ... },           -- knip LSP settings (see doc/knip.txt)
   on_attach = nil,              -- extra callback after built-in on_attach
 })
 ```
+
+### Server resolution
+
+The plugin finds the language server in this order:
+
+1. **Volta** global install (`~/.volta/tools/image/packages/...`)
+2. **Mason** install (`~/.local/share/nvim/mason/packages/...`)
 
 ## Zero-config (Neovim 0.11+)
 

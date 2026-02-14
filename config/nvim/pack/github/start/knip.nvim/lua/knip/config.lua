@@ -7,7 +7,10 @@ M.defaults = {
   diagnostics = {
     hide_on_insert = true,
   },
-  restart_on_save = true,
+  restart = {
+    on_save = true,
+    on_insert_leave = true,
+  },
   settings = {
     knip = {
       enabled = true,

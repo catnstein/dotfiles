@@ -1,11 +1,14 @@
 local config = require 'knip.config'
+local server = require 'knip.server'
 
 local M = {}
 
-local DEFAULT_CMD = { 'npx', '@knip/language-server', '--stdio' }
-
 --- @type table|nil
 M._resolved_config = nil
+--- @type string[]|nil
+M._resolved_cmd = nil
+--- @type string|nil
+M._cmd_source = nil
 
 local function build_on_attach(opts)
   return function(client, bufnr)
@@ -34,12 +37,15 @@ local function build_on_attach(opts)
         group = knip_augroup,
         buffer = bufnr,
         callback = function()
+          if opts.restart.on_insert_leave then
+            client:request('knip.restart', nil, function() end, bufnr)
+          end
           vim.diagnostic.show(knip_ns, bufnr)
         end,
       })
     end
 
-    if opts.restart_on_save then
+    if opts.restart.on_save then
       vim.api.nvim_create_autocmd('BufWritePost', {
         group = knip_augroup,
         buffer = bufnr,
@@ -56,11 +62,19 @@ local function build_on_attach(opts)
 end
 
 --- Build the vim.lsp.config spec table from resolved options.
---- @return table
+--- @return table|nil lsp_config
 function M.get_lsp_config()
   local opts = M._resolved_config or config.resolve()
+  local cmd = M._resolved_cmd
+  if not cmd then
+    cmd = server.resolve()
+  end
+  if not cmd then
+    return nil
+  end
+
   return {
-    cmd = DEFAULT_CMD,
+    cmd = cmd,
     filetypes = opts.filetypes,
     root_markers = opts.root_markers,
     settings = opts.settings,
@@ -71,13 +85,19 @@ end
 --- @param opts table|nil
 function M.setup(opts)
   M._resolved_config = config.resolve(opts)
+  M._resolved_cmd, M._cmd_source = server.resolve()
 
-  if vim.fn.executable 'npx' ~= 1 then
-    vim.notify('knip.nvim: npx not found in PATH. Run :checkhealth knip for details.', vim.log.levels.WARN)
+  if not M._resolved_cmd then
+    vim.notify('knip.nvim: language server not found. Install via: volta install @knip/language-server', vim.log.levels.WARN)
     return
   end
 
-  vim.lsp.config('knip', M.get_lsp_config())
+  local lsp_config = M.get_lsp_config()
+  if not lsp_config then
+    return
+  end
+
+  vim.lsp.config('knip', lsp_config)
 
   if M._resolved_config.auto_start then
     vim.lsp.enable 'knip'
