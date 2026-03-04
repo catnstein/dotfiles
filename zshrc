@@ -144,11 +144,9 @@ else
 fi
 
 # go related
-export GOPATH=$HOME/go
-export GOROOT=/usr/local/go  # This path might be different depending on your OS and installation method
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-export PATH="$PATH:$(go env GOPATH)/bin"
-export PATH="$PATH:$HOME/go/bin"
+export GOROOT="$HOME/sdk/go1.26.0"
+export GOPATH="$HOME/go"
+export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
 
 # android
 export ANDROID_HOME=/Users/$USER/Library/Android/sdk
@@ -158,3 +156,6 @@ export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+# Added by Antigravity
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
