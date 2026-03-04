@@ -8,10 +8,6 @@
       }
     }
   },
-  "keybinds": {
-    "input_move_up": "ctrl+p",
-    "input_move_down": "ctrl+n"
-  },
   "mcp": {
     "playwright": {
       "type": "local",
