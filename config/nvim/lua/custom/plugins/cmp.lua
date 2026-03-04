@@ -17,12 +17,13 @@ return {
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-cmdline',
 
-    -- TODO: check snippets
     'rafamadriz/friendly-snippets',
   },
   config = function()
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
+    local from_vscode = require 'luasnip.loaders.from_vscode'
+    from_vscode.lazy_load()
     luasnip.config.setup {}
 
     cmp.setup.cmdline('/', {
