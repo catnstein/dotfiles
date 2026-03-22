@@ -26,3 +26,8 @@ vim.keymap.set('n', '<C-S>', '<cmd>wa<cr>', { desc = 'Save all files' })
 
 -- Disable Options
 vim.keymap.set('n', 's', '<Nop>', { noremap = true, silent = true })
+
+-- Refactor keymaps
+vim.keymap.set({ 'n', 'v' }, '<leader>rr', function()
+  require('refactoring').select_refactor()
+end, { desc = 'Select Refactor' })
