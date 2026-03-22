@@ -24,7 +24,12 @@ return {
     local luasnip = require 'luasnip'
     local from_vscode = require 'luasnip.loaders.from_vscode'
     from_vscode.lazy_load()
-    luasnip.config.setup {}
+    luasnip.config.setup {
+      keep_roots = true,
+      link_roots = true,
+      link_children = true,
+      exit_roots = false,
+    }
 
     cmp.setup.cmdline('/', {
       mapping = cmp.mapping.preset.cmdline(),
@@ -89,7 +94,7 @@ return {
           end
         end, { 'i', 's' }),
         ['<C-h>'] = cmp.mapping(function()
-          if luasnip.locally_jumpable(-1) then
+          if luasnip.jumpable(-1) then
             luasnip.jump(-1)
           end
         end, { 'i', 's' }),
