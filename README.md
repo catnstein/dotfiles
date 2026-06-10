@@ -8,8 +8,6 @@ Personal dotfiles for macOS.
 git clone git@github.com:catnstein/dotfiles.git ~/dotfiles
 ```
 
-## Setup
-
 Run the installer:
 
 ```bash
