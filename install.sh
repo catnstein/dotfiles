@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && /bin/pwd -P)"
 
 ensure_dir() {
   mkdir -p "$1"
@@ -31,7 +31,7 @@ link_item() {
     return
   fi
 
-  if [[ -L "$target" && "$(readlink "$target")" == "$source" ]]; then
+  if [[ -L "$target" && "$(/usr/bin/readlink "$target")" == "$source" ]]; then
     printf 'OK: %s -> %s\n' "$target" "$source"
     return
   fi
@@ -51,6 +51,7 @@ link_item() {
 
 ensure_dir "$HOME/.config"
 ensure_dir "$HOME/.config/opencode"
+ensure_dir "$HOME/.agents"
 
 link_item "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
 link_item "$DOTFILES_DIR/tmux.conf" "$HOME/.tmux.conf"
@@ -59,5 +60,7 @@ link_item "$DOTFILES_DIR/config/nvim" "$HOME/.config/nvim"
 link_item "$DOTFILES_DIR/config/alacritty" "$HOME/.config/alacritty"
 link_item "$DOTFILES_DIR/config/aerospace" "$HOME/.config/aerospace"
 link_item "$DOTFILES_DIR/config/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
+link_item "$DOTFILES_DIR/config/opencode/skills" "$HOME/.config/opencode/skills"
+link_item "$HOME/.config/opencode/skills" "$HOME/.agents/skills"
 
 printf 'Done.\n'
