@@ -11,10 +11,25 @@ return {
       return
     end
 
-    local parsers = { 'bash', 'c', 'html', 'lua', 'markdown', 'markdown_inline', 'vim', 'vimdoc', 'query', 'regex' }
+    local parsers = {
+      'bash',
+      'c',
+      'html',
+      'javascript',
+      'jsdoc',
+      'lua',
+      'markdown',
+      'markdown_inline',
+      'tsx',
+      'typescript',
+      'vim',
+      'vimdoc',
+      'query',
+      'regex',
+    }
     local installed = {}
 
-    for _, parser in ipairs(treesitter.get_installed('parsers')) do
+    for _, parser in ipairs(treesitter.get_installed 'parsers') do
       installed[parser] = true
     end
 
@@ -31,7 +46,7 @@ return {
     end
 
     vim.api.nvim_create_autocmd('FileType', {
-      pattern = { 'bash', 'c', 'html', 'lua', 'markdown', 'sh', 'vim', 'vimdoc' },
+      pattern = { 'bash', 'c', 'html', 'javascript', 'javascriptreact', 'lua', 'markdown', 'sh', 'typescript', 'typescriptreact', 'vim', 'vimdoc' },
       callback = function()
         pcall(vim.treesitter.start)
 
