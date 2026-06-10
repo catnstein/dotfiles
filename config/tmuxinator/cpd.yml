@@ -29,6 +29,13 @@ windows:
         - ""
         - ""
         - ""
+  - claim-portal:
+      root: claim-portal-app
+      layout: main-horizontal
+      panes:
+        - ""
+        - ""
+        - ""
   - node-api-background:
       root: node-api
       layout: main-horizontal
