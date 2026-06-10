@@ -105,5 +105,5 @@ if [[ "$(pane_window "$scratch_pane")" == "$current_window" ]]; then
 fi
 
 ensure_parking_window
-tmux move-pane -f -h -l 50% -s "$scratch_pane" -t "$current_pane"
+tmux move-pane -f -h -l 40% -s "$scratch_pane" -t "$current_pane"
 tmux select-pane -t "$scratch_pane"
