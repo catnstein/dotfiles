@@ -5,13 +5,15 @@ return { -- LSP Configuration & Plugins
   },
   dependencies = {
     -- Automatically install LSPs and related tools to stdpath for neovim
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
+    'mason-org/mason.nvim',
+    'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
 
     -- Useful status updates for LSP.
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
     { 'j-hui/fidget.nvim', opts = {} },
+
+    'hrsh7th/cmp-nvim-lsp',
   },
   config = function()
     -- Brief Aside: **What is LSP?**
@@ -43,7 +45,6 @@ return { -- LSP Configuration & Plugins
     --    That is to say, every time a new file is opened that is associated with
     --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
     --    function will be executed to configure the current buffer
-    local nvim_lsp = require 'lspconfig'
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)
@@ -95,8 +96,19 @@ return { -- LSP Configuration & Plugins
     --  By default, Neovim doesn't support everything that is in the LSP Specification.
     --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
     --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+    vim.lsp.config('*', { capabilities = capabilities })
+
+    local ts_inlay_hints = {
+      includeInlayParameterNameHints = 'all',
+      includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+      includeInlayFunctionParameterTypeHints = true,
+      includeInlayVariableTypeHints = true,
+      includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+      includeInlayPropertyDeclarationTypeHints = true,
+      includeInlayFunctionLikeReturnTypeHints = true,
+      includeInlayEnumMemberValueHints = true,
+    }
 
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -110,46 +122,66 @@ return { -- LSP Configuration & Plugins
     local servers = {
       -- clangd = {},
       -- golangci_lint_ls = {},
-      -- denols = {
-      --   -- on_attach = on_attach,
-      --   root_dir = nvim_lsp.util.root_pattern('deno.json', 'deno.jsonc'),
-      -- },
-      -- nvim_lsp.ts_ls.setup {
-      --   -- on_attach = on_attach,
-      --   root_dir = nvim_lsp.util.root_pattern 'package.json',
-      --   single_file_support = false,
-      -- },
+      lua_ls = {
+        on_init = function(client)
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then
+              return
+            end
+          end
+
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+              version = 'LuaJIT',
+              path = {
+                'lua/?.lua',
+                'lua/?/init.lua',
+              },
+            },
+            diagnostics = {
+              globals = { 'Snacks', 'snacks' },
+            },
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+              },
+            },
+          })
+        end,
+        settings = {
+          Lua = {},
+        },
+      },
       -- pyright = {},
       -- rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-      --
-      -- Some languages (like typescript) have entire language plugins that can be useful:
-      --    https://github.com/pmizio/typescript-tools.nvim
-      --
-      -- But for many setups, the LSP (`tsserver`) will work just fine
-      -- INFO: momentarily using typescript-tools. Use below settings if typescript-tools proves underwhelming
-      -- tsserver = {
-      -- settings = {
-      --   typescript = {
-      --     inlayHints = {
-      --       includeInlayParameterNameHints = 'all',
-      --       includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-      --       includeInlayFunctionParameterTypeHints = true,
-      --       includeInlayVariableTypeHints = true,
-      --       includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-      --       includeInlayPropertyDeclarationTypeHints = true,
-      --       includeInlayFunctionLikeReturnTypeHints = true,
-      --       includeInlayEnumMemberValueHints = true,
-      --     },
-      --   },
-      -- }
-      -- },
+      html = {},
+      gopls = {},
+      pylsp = {},
+      ts_ls = {
+        settings = {
+          typescript = {
+            inlayHints = ts_inlay_hints,
+          },
+          javascript = {
+            inlayHints = ts_inlay_hints,
+          },
+        },
+      },
       angularls = {
-        capabilities = {},
+        root_dir = function(bufnr, on_dir)
+          on_dir(vim.fs.root(bufnr, { 'angular.json', 'project.json' }))
+        end,
       },
       protols = {},
-      buf = {},
+      buf_ls = {},
     }
+
+    for name, config in pairs(servers) do
+      vim.lsp.config(name, config)
+    end
 
     -- Ensure the servers and tools above are installed
     --  To check the current status of installed tools and/or manually install
@@ -161,38 +193,14 @@ return { -- LSP Configuration & Plugins
 
     -- You can add other tools here that you want Mason to install
     -- for you, so that they are available from within Neovim.
-    local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, {
+    local ensure_installed = {
       'stylua', -- Used to format lua code
-    })
+    }
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
-      ensure_installed = {},
-      automatic_installation = {},
-      automatic_enable = {
-        exclude = { 'stylua' },
-      },
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for tsserver)
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-
-          if server_name == 'denols' then
-          end
-
-          -- fix for angularls in nx workspaces
-          if server_name == 'angularls' then
-            local util = require 'lspconfig.util'
-            server.root_dir = util.root_pattern('angular.json', 'project.json')
-          end
-
-          require('lspconfig')[server_name].setup(server)
-        end,
-      },
+      ensure_installed = vim.tbl_keys(servers),
+      automatic_enable = true,
     }
   end,
 }
