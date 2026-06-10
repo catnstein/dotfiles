@@ -1,10 +1,10 @@
 ---
 name: naming
-project_root: "/Users/mirceabadragan/Work/omnisource/naming-ai/naming-ai"
+root: ~/Work/omnisource/naming-ai/naming-ai
 windows:
-- frontend:
-    layout: e312,121x60,0,0[121x30,0,0,0,121x29,0,31{60x29,0,31,4,60x29,61,31,5}]
-    panes:
-    - cd /Users/mirceabadragan/Work/omnisource/naming-ai/naming-ai
-    - cd /Users/mirceabadragan/Work/omnisource/naming-ai/naming-ai
-    - cd /Users/mirceabadragan/Work/omnisource/naming-ai/naming-ai
+  - frontend:
+      layout: main-horizontal
+      panes:
+        - ""
+        - ""
+        - ""

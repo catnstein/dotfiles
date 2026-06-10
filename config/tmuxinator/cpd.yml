@@ -1,34 +1,38 @@
 ---
 name: cpd
-project_root: "/Users/mirceabadragan/Work/omnisource/cpd/node-api"
+root: ~/Work/omnisource/cpd
 windows:
-- root:
-    layout: e312,121x60,0,0[121x30,0,0,0,121x29,0,31{60x29,0,31,4,60x29,61,31,5}]
-    panes:
-    - cd /Users/mirceabadragan/Work/omnisource/cpd
-    - cd /Users/mirceabadragan/Work/omnisource/cpd
-    - cd /Users/mirceabadragan/Work/omnisource/cpd
-- node-api:
-    layout: e312,121x60,0,0[121x30,0,0,0,121x29,0,31{60x29,0,31,4,60x29,61,31,5}]
-    panes:
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/node-api
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/node-api
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/node-api
-- react-app:
-    layout: a616,121x60,0,0[121x30,0,0,6,121x29,0,31{60x29,0,31,7,60x29,61,31,8}]
-    panes:
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/react-app
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/react-app
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/react-app
-- claim:
-    layout: 93ae,121x60,0,0[121x30,0,0,9,121x29,0,31{60x29,0,31,10,60x29,61,31,11}]
-    panes:
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/claim-react-app
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/claim-react-app
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/claim-react-app
-- node-api(background):
-    layout: e312,121x60,0,0[121x30,0,0,0,121x29,0,31{60x29,0,31,4,60x29,61,31,5}]
-    panes:
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/node-api
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/node-api
-    - cd /Users/mirceabadragan/Work/omnisource/cpd/node-api
+  - root:
+      layout: main-horizontal
+      panes:
+        - ""
+        - ""
+        - ""
+  - node-api:
+      root: node-api
+      layout: main-horizontal
+      panes:
+        - ""
+        - ""
+        - ""
+  - react-app:
+      root: react-app
+      layout: main-horizontal
+      panes:
+        - ""
+        - ""
+        - ""
+  - claim:
+      root: claim-react-app
+      layout: main-horizontal
+      panes:
+        - ""
+        - ""
+        - ""
+  - node-api-background:
+      root: node-api
+      layout: main-horizontal
+      panes:
+        - ""
+        - ""
+        - ""
